@@ -1,0 +1,56 @@
+# Dependencies and generated output
+node_modules/
+dist/
+.astro/
+.vite/
+.cache/
+coverage/
+*.tsbuildinfo
+
+# Private references, source recordings and working files
+refs/
+references/
+.work/
+DREHBUCH.md
+Drehbuch.md
+*.mov
+*.ses
+
+# Environment variables and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local tools, editors and deployment state
+.codex/
+.agents/
+.claude/
+.cursor/
+.idea/
+.vscode/
+.vercel/
+.netlify/
+.wrangler/
+.npm/
+.pnpm-store/
+.turbo/
+
+# Logs, temporary files and OS metadata
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+.AppleDouble
+._*
+.Spotlight-V100/
+.Trashes/
+Thumbs.db
+Desktop.ini

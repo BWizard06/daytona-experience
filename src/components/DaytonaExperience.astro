@@ -1,0 +1,307 @@
+---
+import "../styles/experience.css";
+const chapters = [
+  "The pursuit",
+  "The instinct",
+  "The icon",
+  "The world within",
+  "Beyond the moment",
+];
+const ids = ["origin", "driver", "icon", "within", "return"];
+const chapterLabel = (i) =>
+  `${String(i + 1).padStart(2, "0")} — ${chapters[i]}`;
+---
+
+<main class="experience" id="experience" data-experience>
+  <a class="skip-experience" href="#static-story">
+    View the still experience
+  </a>
+  <div class="experience__stage">
+    <div class="experience__media" aria-hidden="true">
+      <div class="race-layer" data-race-layer>
+        <img
+          src="/experience/race.webp"
+          width="1920"
+          height="1086"
+          alt=""
+          fetchpriority="high"
+        />
+        <video
+          data-race-video
+          data-src="/experience/race.mp4"
+          muted
+          playsinline
+          preload="none"
+          disablepictureinpicture
+          tabindex="-1"
+        ></video>
+      </div>
+      <img
+        class="wrist-layer"
+        data-wrist
+        src="/experience/wrist.webp"
+        width="1920"
+        height="1086"
+        alt=""
+      />
+      <div class="studio-light" data-studio></div>
+      <div class="opening-layer film-frame" data-opening-layer>
+        <img src="/experience/opening.webp" width="1920" height="1080" alt="" />
+        <video
+          data-opening-video
+          data-src="/experience/opening.mp4"
+          muted
+          playsinline
+          preload="none"
+          disablepictureinpicture
+          tabindex="-1"
+        ></video>
+      </div>
+      <div class="movement-layer film-frame" data-movement-layer>
+        <img
+          src="/experience/movement.webp"
+          width="1920"
+          height="1080"
+          alt=""
+        />
+        <video
+          data-movement-video
+          data-src="/experience/movement.mp4"
+          muted
+          playsinline
+          preload="none"
+          disablepictureinpicture
+          tabindex="-1"
+        ></video>
+      </div>
+      <div class="experience__shade" data-shade></div>
+      <div class="experience__grain"></div>
+    </div>
+    <header class="experience__header">
+      <a
+        class="wordmark"
+        href="#origin"
+        data-chapter="0"
+        aria-label="Return to the beginning"
+      >
+        <svg viewBox="0 0 24 28" width="22" height="26" aria-hidden="true">
+          <path d="M9 1h6M12 1v4M19 5l3 3M20 7l-2 2" />
+          <circle cx="12" cy="17" r="9" />
+          <path d="M12 10v7l4 2" />
+        </svg>
+        <span>Rolex Daytona</span>
+      </a>
+      <span class="edition">
+        An independent tribute <span></span> No. 001
+      </span>
+      <div class="experience__controls">
+        <button
+          class="tour-toggle tour-toggle--header"
+          type="button"
+          data-tour
+          aria-pressed="false"
+          aria-label="Play guided experience"
+        >
+          <span class="tour-icon" aria-hidden="true"></span>
+          <span data-tour-label>Play</span>
+        </button>
+        <button
+          class="motion-toggle"
+          type="button"
+          data-motion
+          aria-pressed="false"
+          aria-label="Use reduced motion"
+        >
+          Motion <span data-motion-label>on</span>
+          <i aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
+    <div class="experience__copy copy--origin" data-copy="origin">
+      <p class="eyebrow">
+        <span></span> {chapterLabel(0)}
+      </p>
+      <h1>
+        Where every
+        <br />
+        <em>second</em> matters.
+      </h1>
+      <div class="copy__intro">
+        <p>
+          The Rolex Daytona. One of my favourite watches.
+          <br />
+          A tribute to my passion for watches, design and motion.
+        </p>
+        <p>Independent fan project. Not affiliated with Rolex.</p>
+      </div>
+    </div>
+    <div class="experience__copy copy--driver" data-copy="driver">
+      <p class="eyebrow">{chapterLabel(1)}</p>
+      <h2>
+        Precision,
+        <br />
+        <em>under pressure.</em>
+      </h2>
+      <p class="copy__note">
+        A world in motion.
+        <br />A moment in your hands.
+      </p>
+    </div>
+    <div class="experience__copy copy--icon" data-copy="icon">
+      <p class="eyebrow">{chapterLabel(2)}</p>
+      <h2>
+        Cosmograph
+        <br />
+        <em>Daytona.</em>
+      </h2>
+    </div>
+    <div class="experience__copy copy--within" data-copy="within">
+      <p class="eyebrow">{chapterLabel(3)}</p>
+      <h2>
+        A world
+        <br />
+        <em>within.</em>
+      </h2>
+      <p class="copy__note">
+        The quiet choreography
+        <br />
+        behind every passing second.
+      </p>
+      <span class="reference">AN IMPRESSION OF MECHANICAL TIME</span>
+    </div>
+    <div class="experience__copy copy--return" data-copy="return">
+      <p class="eyebrow">{chapterLabel(4)}</p>
+      <h2>
+        Some moments
+        <br />
+        <em>stay with you.</em>
+      </h2>
+      <p class="copy__note">The Cosmograph Daytona.</p>
+      <button class="replay" type="button" data-replay>
+        <span aria-hidden="true">↺</span> Experience it again
+      </button>
+      <a
+        class="portfolio-link"
+        href="https://braendle.tech/de/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Discover my portfolio <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="intro-controls" data-invitation>
+      <div class="scroll-invitation" aria-hidden="true">
+        <span></span>Scroll to discover
+      </div>
+      <span class="intro-controls__or" aria-hidden="true">
+        or
+      </span>
+      <button
+        class="tour-toggle tour-toggle--intro"
+        type="button"
+        data-tour
+        aria-pressed="false"
+        aria-label="Play guided experience"
+      >
+        <span class="tour-icon" aria-hidden="true"></span>
+        <span>
+          <span data-tour-label>Play</span> experience
+        </span>
+      </button>
+    </div>
+    <footer class="experience__footer">
+      <nav class="chapter-nav" aria-label="Experience chapters">
+        {chapters.map((name, i) => (
+          <a
+            href={`#${ids[i]}`}
+            data-chapter={String(i)}
+            aria-label={`${i + 1}. ${name}`}
+            aria-current={i === 0 ? "step" : undefined}
+          >
+            <span class="chapter-nav__number">0{i + 1}</span>
+            <span class="chapter-nav__name">{name}</span>
+            <span class="chapter-nav__tick"></span>
+          </a>
+        ))}
+      </nav>
+      <span class="experience__counter">
+        <span data-counter>01</span>
+        <span> / 05</span>
+      </span>
+    </footer>
+    <div class="experience__progress" aria-hidden="true">
+      <span data-progress></span>
+    </div>
+    <p class="experience__credit" data-credit>
+      Independent fan experience. Not affiliated with Rolex.
+    </p>
+  </div>
+  <div class="static-story" id="static-story">
+    <section id="origin">
+      <span class="eyebrow">{chapterLabel(0)}</span>
+      <h2>Where every second matters.</h2>
+      <p>Scroll to explore an independent tribute to the Cosmograph Daytona.</p>
+    </section>
+    <section id="driver">
+      <img
+        src="/experience/wrist.webp"
+        alt="A racing driver's gloved hand on a wooden steering wheel."
+        loading="lazy"
+      />
+      <div>
+        <span class="eyebrow">{chapterLabel(1)}</span>
+        <h2>Precision, under pressure.</h2>
+      </div>
+    </section>
+    <section id="icon" class="static-story__watch">
+      <img
+        class="static-product"
+        src="/experience/daytona.webp"
+        width="1744"
+        height="2336"
+        alt="Rolex Cosmograph Daytona with a black dial, silver chronograph counters and a steel bracelet."
+        loading="lazy"
+      />
+      <div>
+        <span class="eyebrow">{chapterLabel(2)}</span>
+        <h2>Cosmograph Daytona.</h2>
+      </div>
+    </section>
+    <section id="within">
+      <img
+        src="/experience/movement.webp"
+        alt="An artistic visualization of a mechanical watch movement."
+        loading="lazy"
+      />
+      <div>
+        <span class="eyebrow">{chapterLabel(3)}</span>
+        <h2>A world within.</h2>
+        <p>The quiet choreography behind every passing second.</p>
+      </div>
+    </section>
+    <section id="return">
+      <span class="eyebrow">{chapterLabel(4)}</span>
+      <h2>Some moments stay with you.</h2>
+      <a href="#experience">Back to the beginning ↑</a>
+      <a
+        class="portfolio-link"
+        href="https://braendle.tech/de/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Discover my portfolio <span aria-hidden="true">↗</span>
+      </a>
+      <p class="static-story__credit">
+        Independent fan experience. Not affiliated with Rolex.
+      </p>
+    </section>
+  </div>
+</main>
+<script>
+  import { mountExperience } from "../scripts/experience.js";
+  const root = document.querySelector("[data-experience]");
+  if (root instanceof HTMLElement) {
+    const cleanup = mountExperience(root);
+    if (import.meta.hot) import.meta.hot.dispose(cleanup);
+  }
+</script>

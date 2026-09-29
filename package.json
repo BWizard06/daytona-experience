@@ -1,0 +1,19 @@
+{
+  "name": "daytona",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "test": "node --test tests/*.test.js",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "astro": "^7.3.5"
+  },
+  "description": "An immersive, scroll-driven tribute to the Cosmograph Daytona.",
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
