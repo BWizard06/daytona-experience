@@ -1,4 +1,5 @@
-import { CHAPTERS, clamp, getComposition } from "./experience-timeline.js";
+import { CHAPTERS, getComposition } from "./experience-timeline.js";
+import { createScrollVideo } from "./scroll-video.js";
 import {
   TOUR_DURATION,
   getTourProgress,
@@ -33,6 +34,9 @@ export function mountExperience(root) {
     opening: find("opening-video"),
     movement: find("movement-video"),
   };
+  const films = Object.fromEntries(
+    Object.entries(videos).map(([name, video]) => [name, createScrollVideo(video)]),
+  );
   const elements = Object.fromEntries(
     [
       "race-layer",
@@ -116,48 +120,6 @@ export function mountExperience(root) {
     wake();
   }
 
-  function load(video) {
-    if (video.dataset.started || reduced) return;
-    video.dataset.started = "true";
-    video.src = video.dataset.src;
-    video.preload = "auto";
-    video.load();
-  }
-
-  for (const video of Object.values(videos)) {
-    const decoded = () => {
-      if (video.readyState >= 2) video.classList.add("has-frame");
-      wake();
-    };
-    video.addEventListener("loadeddata", decoded, { signal });
-    video.addEventListener("seeked", decoded, { signal });
-    video.addEventListener("loadedmetadata", wake, { signal });
-    video.addEventListener(
-      "error",
-      () => {
-        video.classList.remove("has-frame");
-        video.dataset.failed = "true";
-        wake();
-      },
-      { signal },
-    );
-  }
-
-  function seek(video, fraction) {
-    if (
-      !video.dataset.started ||
-      video.dataset.failed ||
-      !Number.isFinite(video.duration)
-    )
-      return;
-    const time = clamp(fraction) * Math.max(0, video.duration - 1 / 30);
-    if (!video.seeking && Math.abs(video.currentTime - time) > 1 / 45) {
-      try {
-        video.currentTime = time;
-      } catch {}
-    }
-  }
-
   function measure() {
     width = stage.clientWidth;
     height = stage.clientHeight;
@@ -221,11 +183,11 @@ export function mountExperience(root) {
       });
     }
 
-    seek(videos.race, state.raceTime);
-    if (progress > 0.18) load(videos.opening);
-    if (progress > 0.54) load(videos.movement);
-    if (state.openingActive) seek(videos.opening, state.openingTime);
-    if (state.movementActive) seek(videos.movement, state.movementTime);
+    films.race.setProgress(state.raceTime);
+    if (!reduced && progress > 0.18) films.opening.load();
+    if (!reduced && progress > 0.54) films.movement.load();
+    if (state.openingActive) films.opening.setProgress(state.openingTime);
+    if (state.movementActive) films.movement.setProgress(state.movementTime);
   }
 
   function tick(now) {
@@ -269,7 +231,7 @@ export function mountExperience(root) {
     updateTourControls();
 
     if (reduced) {
-      Object.values(videos).forEach((video) => video.pause());
+      Object.values(films).forEach((film) => film.reset());
       paint(0);
       elements["opening-layer"].style.visibility = "hidden";
       elements["movement-layer"].style.visibility = "hidden";
@@ -277,7 +239,7 @@ export function mountExperience(root) {
       elements.invitation.inert = true;
       if (preserve) window.scrollTo({ top: 0, behavior: "instant" });
     } else {
-      load(videos.race);
+      films.race.load();
       measure();
       if (preserve) {
         window.scrollTo({
@@ -373,7 +335,20 @@ export function mountExperience(root) {
     },
     { passive: true, signal },
   );
-  window.addEventListener("pageshow", measure, { signal });
+  const retryFilms = () => {
+    if (reduced || destroyed) return;
+    films.race.load();
+    Object.values(films).forEach((film) => film.retry());
+    wake();
+  };
+  window.addEventListener("online", retryFilms, { signal });
+  window.addEventListener("pointerdown", retryFilms, { passive: true, signal });
+  window.addEventListener("keydown", retryFilms, { signal });
+  window.addEventListener("pageshow", () => { retryFilms(); measure(); }, { signal });
+  window.addEventListener("pagehide", (event) => {
+    pauseTour();
+    if (!event.persisted) Object.values(films).forEach((film) => film.reset());
+  }, { signal });
   prefersReduced.addEventListener(
     "change",
     (event) => setMotion(event.matches),
@@ -397,6 +372,6 @@ export function mountExperience(root) {
     destroyed = true;
     listeners.abort();
     if (frame) cancelAnimationFrame(frame);
-    Object.values(videos).forEach((video) => video.pause());
+    Object.values(films).forEach((film) => film.destroy());
   };
 }

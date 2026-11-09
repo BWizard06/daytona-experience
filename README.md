@@ -22,7 +22,7 @@ npm run dev
 ```
 
 ```sh
-npm test          # Timeline and playback checks
+npm test          # Timeline, playback and first-load video checks
 npm run build    # Static output in dist/
 npm run preview  # Preview the production build
 ```
